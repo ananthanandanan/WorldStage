@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user',
+    'graphene_django',  #graphene
+    'import_export',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +54,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'framework.urls'
+
+##custom user
+AUTH_USER_MODEL = 'user.User'
 
 TEMPLATES = [
     {
@@ -65,6 +72,20 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+##Graphene 
+GRAPHENE = {
+    'SCHEMA': 'framework.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
+## jwt authentication
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 WSGI_APPLICATION = 'framework.wsgi.application'
