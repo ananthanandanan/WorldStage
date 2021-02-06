@@ -1,7 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.deletion import SET_NULL
 from framework.utils import GENDER_CHOICES
 from framework.utils import EDUCATIONAL_INSTITUTION_TYPE 
+
+
+class EducationInstitution(models.Model):
+
+    name = models.CharField(max_length=50, blank=False, null=False)
+    slug = models.SlugField(unique=True)
+    isVerified = models.BooleanField(blank=False, null=True, default=False)
+    type = models.PositiveSmallIntegerField(choices=EDUCATIONAL_INSTITUTION_TYPE, default=0)
+    parent = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True)
+
+    class Meta:
+        db_table = 'education_institution'
+        verbose_name = 'Education Institution'
+        verbose_name_plural = 'Education Institutions'
+    
+    def __str__(self):
+        return self.name
+
 
 class User(AbstractUser):
     id = models.BigAutoField(primary_key=True, null=False)
@@ -22,22 +41,7 @@ class User(AbstractUser):
     city = models.CharField(max_length=127, default='', blank=True)
     state = models.CharField(max_length=127, default='', blank=True)
     country = models.CharField(max_length=10, null=False, blank=False, default='IND')
-
-class EducationInstitution(models.Model):
-
-    name = models.CharField(max_length=50, blank=False, null=False)
-    slug = models.SlugField(unique=True)
-    isVerified = models.BooleanField(blank=False, null=True, default=False)
-    type = models.PositiveSmallIntegerField(choices=EDUCATIONAL_INSTITUTION_TYPE, default=0)
-    parent = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True)
-
-    class Meta:
-        db_table = 'education_institution'
-        verbose_name = 'Education Institution'
-        verbose_name_plural = 'Education Institutions'
-    
-    def __str__(self):
-        return self.name
+    educationInstitution = models.ForeignKey(EducationInstitution, on_delete=SET_NULL, null=True, blank=True)
 
 
 
