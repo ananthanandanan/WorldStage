@@ -1,9 +1,10 @@
 import graphene
 import graphql_jwt
-from user.graphql.query import UserQuery
+from user.graphql.query import UserQuery, EducationInstitutionQuery
 
 
-class Query(UserQuery):
+class Query(UserQuery,
+            EducationInstitutionQuery):
     pass
     
 
