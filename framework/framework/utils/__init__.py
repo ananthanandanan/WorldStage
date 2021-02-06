@@ -5,3 +5,11 @@ GENDER_CHOICES = (
     (9, 'Not Applicable')
 )
 
+EDUCATIONAL_INSTITUTION_TYPE = (
+    (0, 'Unknown'),
+    (1, 'School'),
+    (2, 'College'),
+    (3, 'University')
+)
+
+

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import User
+from .models import EducationInstitution 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -11,4 +12,10 @@ class UserAdmin(admin.ModelAdmin):
     ]
     ##seach fields
     search_fields = ['username', 'first_name', 'last_name', 'email']
+
+@admin.register(EducationInstitution)
+class EducationInstitutionAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['parent']
+    list_filter = ['isVerified', 'type']
+    search_fields = ['name', 'slug']
 
