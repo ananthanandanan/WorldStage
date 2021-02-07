@@ -8,7 +8,7 @@ class UserQuery(graphene.ObjectType):
     def resolve_users(self, info):
         return User.objects.all()
     
- 
+
 class EducationInstitutionQuery(graphene.ObjectType):
     educationInstitutions = graphene.Field(EducationInstitutionType,
             name= graphene.String(),

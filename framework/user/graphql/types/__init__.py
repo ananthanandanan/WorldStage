@@ -51,6 +51,6 @@ class UserBasicObj(
         return self.educationInstitution
 
 
- 
+
 
 
