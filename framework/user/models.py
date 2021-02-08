@@ -43,11 +43,43 @@ class User(AbstractUser):
     country = models.CharField(max_length=10, null=False, blank=False, default='IND')
     educationInstitution = models.ForeignKey(EducationInstitution, on_delete=SET_NULL, null=True, blank=True)
 
+class EmailAddress(models.Model):
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
+    user_email = models.EmailField(unique=True, null=False, blank=False)
+    is_primary = models.BooleanField(blank=False, null=False, default=False)
+    
+    class Meta:
+        db_table = 'emailaddress'
+        verbose_name = 'Email Address'
+        verbose_name_plural = 'Email Addresses'
 
+    def __str__(self):
+        return self.user_email
+
+    def _set_primary_flag(self):
+        
+        for email in self.user.emailaddress_set.all():
+            if email==self:
+                if not email.is_primary:
+                    email.is_primary = True
+                    email.save()
+            else:
+                if email.is_primary:
+                    email.is_primary = False
+                    email.save()
+
+
+    def set_primary(self):
+        """We will set this email address object as primary email to this user """
+        self.user.email = self.user_email
+        self.user.save()
+        self._set_primary_flag()
 
 __all__ = [
     'User',
-    'EducationInstitutio'
+    'EducationInstitutio',
+    'EmailAddress'
 ] 
 
 

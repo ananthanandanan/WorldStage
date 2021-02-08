@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import User
-from .models import EducationInstitution 
+from .models import EducationInstitution , EmailAddress
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -19,3 +19,7 @@ class EducationInstitutionAdmin(admin.ModelAdmin):
     list_filter = ['isVerified', 'type']
     search_fields = ['name', 'slug']
 
+@admin.register(EmailAddress)
+class EmailAddressAdmin(admin.ModelAdmin):
+    list_display = ['user', 'user_email']
+    list_filter = ['is_primary']

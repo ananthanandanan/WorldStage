@@ -1,10 +1,10 @@
 import graphene
 import graphql_jwt
-from user.graphql.query import UserQuery, EducationInstitutionQuery
+from user.graphql.query import UserQuery, EducationInstitutionQuery, EmailAddressQuery
 from user.graphql.mutations import Mutation as UserMutation
 
 class Query(UserQuery,
-            EducationInstitutionQuery):
+            EducationInstitutionQuery,EmailAddressQuery):
     pass
     
 

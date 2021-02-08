@@ -1,5 +1,5 @@
 import graphene
-from user.models import User, EducationInstitution
+from user.models import User, EducationInstitution, EmailAddress
 from framework.utils import EDUCATIONAL_INSTITUTION_TYPE 
 
 
@@ -49,8 +49,17 @@ class UserBasicObj(
             return self.phone
     def resolve_education(self, info):
         return self.educationInstitution
+    
 
 
-
+class EmailAddressType(graphene.ObjectType,
+                    description='email address type'):
+    userEmails = graphene.List(graphene.String)
+    ## [{'user_email': 'thisis1@gmail.com'}, {'user_email': 'thisis2@gmail.com'}, {'user_email': 'hello@gmail.com'}]
+    def resolve_userEmails(self, info):
+        emails = []
+        for e in self:
+            emails.append(e['user_email'])
+        return emails
 
 
