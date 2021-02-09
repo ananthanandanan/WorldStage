@@ -28,8 +28,25 @@ class CreateUser(graphene.Mutation,
 
                 user.set_password(password)
                 user.bio = inputs.bio
+                EmailAddress.objects.create(user=user, 
+                                        user_email=inputs.email,
+                                        is_primary=True)
                 user.save()
                 return UserCreationResponse(success=True, returning=user)
+
+
+class AddEmailAddress(graphene.Mutation,
+                description='Add new email to user'):
+        class Arguments:
+                email = graphene.String(required=True,
+                                description='New email to be added')
+        Output = graphene.Boolean
+
+        def mutate(self, info, email) -> bool:
+                user = info.context.user
+                EmailAddress.objects.create(user=user, 
+                                user_email=email)
+                return True
 
 
 class SwitchUserEmail(graphene.Mutation,
@@ -50,6 +67,7 @@ class SwitchUserEmail(graphene.Mutation,
 class Mutation(graphene.ObjectType):
         createUser = CreateUser.Field()
         swithcUSerEmail = SwitchUserEmail.Field()
+        addEmailAddress = AddEmailAddress.Field()
 
 __all__ = [
         'Mutation',

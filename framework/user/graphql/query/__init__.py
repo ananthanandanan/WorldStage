@@ -11,12 +11,12 @@ class UserQuery(graphene.ObjectType):
 
 class EducationInstitutionQuery(graphene.ObjectType):
     educationInstitutions = graphene.Field(EducationInstitutionType,
-            name= graphene.String(),
+            id= graphene.ID(),
             description='education type')
 
     def resolve_educationInstitutions(self, info, **kwargs):
-        name = kwargs.get('name')
-        return EducationInstitution.objects.get(name=name)
+        id = kwargs.get('id')
+        return EducationInstitution.objects.get(id=id)
     
 class EmailAddressQuery(graphene.ObjectType):
     emailAddress = graphene.Field(EmailAddressType,  user=graphene.String(),
