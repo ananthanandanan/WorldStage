@@ -23,7 +23,7 @@ urlpatterns = [
     path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]
 
-#custom heading on admin
+# custom heading on admin
 admin.site.site_header = 'World'
 admin.site.index_title = 'Admin Dashboard'
 admin.site.site_title = 'World Stage'
